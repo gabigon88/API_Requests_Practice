@@ -14,6 +14,8 @@ URL = "https://www.momoshop.com.tw/goods/GoodsDetail.jsp?i_code=7632145" # 要�
 
 chrome_options = Options()
 chrome_options.add_argument('--headless')
+chrome_options.add_argument("blink-settings=imagesEnabled=false") # 不加載圖片
+# chrome_options.add_argument("window-size=1600,900")
 driver = webdriver.Chrome(chrome_options=chrome_options)
 wait = WebDriverWait(driver, 10)
 driver.get(URL)
@@ -26,7 +28,7 @@ wait.until(EC.presence_of_element_located((By.ID,"memId"))).send_keys(account)
 pwTF = wait.until(EC.presence_of_element_located((By.ID,"passwd_show")))
 ActionChains(driver).move_to_element(pwTF).click(pwTF).perform()
 wait.until(EC.presence_of_element_located((By.ID,"passwd"))).send_keys(password)
-wait.until(EC.presence_of_element_located((By.XPATH,'//*[@id="loginForm"]/dl[2]/dd[6]/input'))).click()
+wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="loginForm"]/dl[2]/dd[6]/input'))).click()
 
 flag = True
 buyBtn = None
@@ -40,6 +42,6 @@ while flag:
         flag = False
 
 buyBtn.click()
-wait.until(EC.presence_of_element_located((By.XPATH,'//*[@id="shpSumm"]/div/ul/li[1]/a'))).click()
-wait.until(EC.presence_of_element_located((By.ID,"orderSave"))).click()
+wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="shpSumm"]/div/ul/li[1]/a'))).click()
+wait.until(EC.element_to_be_clickable((By.ID,"orderSave"))).click()
 driver.quit()
